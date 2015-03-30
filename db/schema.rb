@@ -14,12 +14,12 @@
 ActiveRecord::Schema.define(version: 20111014211037) do
 
   create_table "issues", force: :cascade do |t|
-    t.string   "name"
-    t.text     "description"
-    t.integer  "priority"
-    t.string   "status"
-    t.integer  "project_id"
-    t.integer  "assignee_id"
+    t.string   "name",        limit: 255
+    t.text     "description", limit: 65535
+    t.integer  "priority",    limit: 4
+    t.string   "status",      limit: 255
+    t.integer  "project_id",  limit: 4
+    t.integer  "assignee_id", limit: 4
     t.date     "started_on"
     t.date     "due_on"
     t.datetime "created_at"
@@ -27,26 +27,26 @@ ActiveRecord::Schema.define(version: 20111014211037) do
   end
 
   create_table "projects", force: :cascade do |t|
-    t.string   "name"
-    t.text     "description"
-    t.boolean  "on_hold"
+    t.string   "name",        limit: 255
+    t.text     "description", limit: 65535
+    t.boolean  "on_hold",     limit: 1
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "sessions", force: :cascade do |t|
-    t.string   "session_id", null: false
-    t.text     "data"
+    t.string   "session_id", limit: 255,   null: false
+    t.text     "data",       limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id"
-  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at"
+  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", using: :btree
+  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email"
+    t.string   "name",       limit: 255
+    t.string   "email",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
